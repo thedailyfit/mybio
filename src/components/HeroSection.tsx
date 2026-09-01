@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { containerVariants, fadeUpVariants } from '../lib/motion';
 import { hero, profile } from '../data/profile';
+import watermarkImg from '../assets/watermark.png';
 
 const navItems = [
   { name: 'ABOUT', href: '#about' },
@@ -20,63 +21,45 @@ const toneGradients: Record<string, string> = {
 export const HeroSection: React.FC = () => {
   return (
     <section className="relative w-screen h-screen overflow-hidden bg-black text-[#E8DFD8] font-sans selection:bg-[#cbb59d] selection:text-black">
-      {/* ================= 1. AMBIENT BACKGROUND (replaces video layer) ================= */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-black">
-        {/* Animated gold radial glow */}
-        <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.07, 0.14, 0.07] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 right-1/4 w-[36rem] h-[36rem] bg-[#D4AF37] rounded-full blur-[160px]"
-        />
-        <motion.div
-          animate={{ scale: [1.1, 1, 1.1], opacity: [0.04, 0.09, 0.04] }}
-          transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/4 left-1/6 w-[30rem] h-[30rem] bg-[#8C6D4F] rounded-full blur-[170px]"
-        />
+      {/* ================= 1. FIXED VIDEO LAYER ================= */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-black flex items-center justify-end">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-screen w-auto max-w-none object-contain origin-right scale-95 md:scale-[0.98] lg:scale-100"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
 
-        {/* Drifting gold particles */}
-        {[
-          { top: '18%', left: '12%', size: 2, dur: 7, delay: 0 },
-          { top: '32%', left: '78%', size: 1.5, dur: 9, delay: 1.2 },
-          { top: '62%', left: '8%', size: 1.5, dur: 8, delay: 0.6 },
-          { top: '74%', left: '70%', size: 2.5, dur: 10, delay: 2 },
-          { top: '48%', left: '45%', size: 1, dur: 12, delay: 0.3 },
-        ].map((p, i) => (
-          <motion.div
-            key={i}
-            animate={{ y: [0, -30, 0], opacity: [0, 0.6, 0] }}
-            transition={{ duration: p.dur, repeat: Infinity, ease: 'easeInOut', delay: p.delay }}
-            className="absolute rounded-full bg-[#F3DBB3] shadow-[0_0_8px_#D4AF37]"
-            style={{ top: p.top, left: p.left, width: p.size, height: p.size }}
-          />
-        ))}
-
-        {/* Seamless soft left blend (keeps text legible) */}
+        {/* Seamless Soft Left Edge Blend */}
         <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black via-black/85 to-transparent pointer-events-none" />
-      </div>
 
-      {/* ================= 2. FLOATING "AR" MONOGRAM EMBLEM ================= */}
-      <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-12 pointer-events-none flex items-center justify-center z-10">
-        <div className="relative flex items-center justify-center">
-          <div className="absolute w-36 h-36 bg-black/85 rounded-full blur-xl" />
-          <motion.div
-            animate={{ y: [-3, 3, -3], scale: [1, 1.03, 1] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="relative flex items-center justify-center"
-          >
-            {/* AR monogram — styled placeholder for future emblem image */}
-            <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full border border-[#D4AF37]/40 flex flex-col items-center justify-center bg-[#0A0806]/90 backdrop-blur-sm drop-shadow-[0_0_15px_rgba(212,175,55,0.25)]">
-              <span
-                className="text-4xl lg:text-[2.6rem] leading-none text-[#D8AB64]"
-                style={{ fontFamily: "'Cinzel', 'Georgia', serif", letterSpacing: '0.08em' }}
-              >
-                AR
-              </span>
-              <span className="text-[7px] tracking-[0.4em] uppercase text-[#8C6D4F] mt-1.5">
-                EST. 2025
-              </span>
-            </div>
-          </motion.div>
+        {/* ================= 2. ANIMATED WATERMARK EMBLEM ================= */}
+        <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-12 pointer-events-none flex items-center justify-center z-10">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute w-36 h-36 bg-black/85 rounded-full blur-xl" />
+
+            <motion.div
+              animate={{
+                y: [-3, 3, -3],
+                scale: [1, 1.03, 1],
+              }}
+              transition={{
+                duration: 4.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              className="relative flex items-center justify-center"
+            >
+              <img
+                src={watermarkImg}
+                alt="Insignia"
+                className="w-28 h-28 lg:w-32 lg:h-32 object-contain drop-shadow-[0_0_15px_rgba(212,175,55,0.25)]"
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
 

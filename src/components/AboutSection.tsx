@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { containerVariants, sectionFadeVariants, eyebrowVariants } from '../lib/motion';
 import { about, profile } from '../data/profile';
+import aboutImg from '../assets/about.png';
 
 export const AboutSection: React.FC = () => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -193,37 +194,14 @@ export const AboutSection: React.FC = () => {
                 <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#D4AF37] transition-transform duration-500 group-hover:translate-x-0.5 group-hover:translate-y-0.5 shadow-[0_0_10px_rgba(212,175,55,0.4)]" />
               </div>
 
-              {/* Monogram Canvas — styled placeholder for future portrait */}
+              {/* Portrait Image Canvas */}
               <div className="relative overflow-hidden w-full max-w-[390px] aspect-[4/5] bg-black rounded-sm">
-                {/* Ambient inner glow */}
-                <motion.div
-                  animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.1, 1] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(212,175,55,0.22),transparent_65%)]"
+                {/* Main Portrait */}
+                <img
+                  src={aboutImg}
+                  alt={profile.name}
+                  className="w-full h-full object-cover object-top filter brightness-[0.94] contrast-[1.06] saturate-[1.02] group-hover:brightness-105 group-hover:contrast-[1.12] transition-all duration-700 ease-out"
                 />
-
-                {/* AR Monogram */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center select-none">
-                  <span
-                    className="text-8xl lg:text-9xl leading-none text-transparent bg-clip-text bg-gradient-to-b from-[#F7E7C4] via-[#C99E5D] to-[#543B1A] drop-shadow-[0_8px_25px_rgba(201,158,93,0.35)]"
-                    style={{ fontFamily: "'Cinzel', 'Georgia', serif", letterSpacing: '0.06em' }}
-                  >
-                    AR
-                  </span>
-                  <span
-                    className="text-[10px] tracking-[0.5em] uppercase text-[#8C6D4F] mt-6"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {profile.name.toUpperCase()}
-                  </span>
-                  <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/60 to-transparent mt-4" />
-                  <span
-                    className="text-[9px] tracking-[0.35em] uppercase text-[#A8988B] mt-4"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {profile.location.toUpperCase()}
-                  </span>
-                </div>
 
                 {/* Mouse-Tracked Holographic Glass Spotlight Sweep */}
                 <motion.div
